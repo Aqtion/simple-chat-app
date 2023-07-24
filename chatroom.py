@@ -22,6 +22,7 @@ class Chatroom:
         :param client: A Client object to be added to the list of clients
         :return: None
         """
+
         self.clients.append(client)
 
     def delete_client(self, client: Client):
