@@ -8,7 +8,7 @@ import _thread
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 PORT = 8001
-IP_ADDRESS = "10.29.60.96" 
+IP_ADDRESS = "10.29.60.96"
 
 client = Client()
 server = Server(IP_ADDRESS, PORT)
@@ -26,6 +26,8 @@ s.connect((server.ip_address, server.port))
 
 
 def listen():
+    user_info_string = "USERINFO " + client.username + " " + client.uuid
+    s.send(user_info_string.encode())
     while True:
         send_message = input()
         print("<" + client.username + "> " + send_message)
