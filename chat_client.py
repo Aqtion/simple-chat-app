@@ -25,3 +25,10 @@ s.connect((serv.ip_address, serv.port))
 
 while True:
     conn, addr = s.accept()
+    if addr == serv.ip_address:
+        message = conn.recv(2048)
+        print(message)
+    else:
+        message = input()
+        conn.send(message.encode())
+        print("<" + {user.username} + "> " + message)
