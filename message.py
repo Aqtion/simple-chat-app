@@ -8,7 +8,12 @@ class Message:
         Time message was sent
         User that sent message
         Message that was sent'''
+    
     def __init__(self, sender: client, msg: str):
+        '''Constructor for Message class
+        Sets date and time to current date and time
+        Sets sender and message to inputted sender and message'''
+
         self.sendDate = date.today()  #date.today() returns in the format yr/mon/day
         self.sendTime = datetime.now().strftime("%H:%M:%S")
         self.sender = sender
