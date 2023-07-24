@@ -1,7 +1,7 @@
 from datetime import datetime, date
 import client
 
-class message:
+class Message:
     '''Represents a message and contains the metadata for each message
     metadata: 
         Date message was sent in the format yr/month/day
