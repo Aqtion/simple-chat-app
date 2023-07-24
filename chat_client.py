@@ -1,34 +1,39 @@
 import socket
-import client
 import uuid
-import server
 from subprocess import check_output
+from client import Client
+from server import Server
+import _thread
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-user = client.Client()
-serv = server.Server()
+PORT = 8001
+IP_ADDRESS = "10.29.60.96" 
 
-ip_address = check_output(["hostname", "-I"]).strip().decode().split()[1]
+client = Client()
+server = Server(IP_ADDRESS, PORT)
 
-serv.port = 8000
-serv.ip_address = "10.39.40.234"
+client.ip_address = IP_ADDRESS
+client.uuid = uuid.uuid1()
 
 username = input("Enter your username")
-user.username = username
-user.ip_address = ip_address
-password = input("Enter your password")
-user.password = password
-user.uuid = uuid.uuid1()
+client.username = username
 
-s.connect((serv.ip_address, serv.port))
+password = input("Enter your password")
+client.password = password
+
+s.connect((server.ip_address, server.port))
+
+
+def listen():
+    while True:
+        send_message = input()
+        print("<" + client.username + "> " + send_message)
+        s.send(send_message.encode())
+
+
+_thread.start_new_thread(listen, ())
 
 while True:
-    conn, addr = s.accept()
-    if addr == serv.ip_address:
-        message = conn.recv(2048)
-        print(message)
-    else:
-        message = input()
-        conn.send(message.encode())
-        print("<" + {user.username} + "> " + message)
+    message = s.recv(2048)
+    print(message.decode())
