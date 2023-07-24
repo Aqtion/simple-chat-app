@@ -1,26 +1,34 @@
 import socket
-import server
+import _thread
 
 # Global veriables
-PORT = 8000
-ADDRESS = ("", PORT)
+PORT = 8001
+ADDRESS = ("10.29.60.96", PORT)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 s.bind(ADDRESS)
 CLIENTS = {}
 
-serv = server.Server()
 
+def broadcast_message(data, conn, addr):
+    for client in CLIENTS:    
+        if client != addr[0]:
+            print(client)
+            # conn.send(("<" + addr[0] + "> " + data).encode())
+            CLIENTS[client].send(("<" + addr[0] + "> " + data).encode())
+            # s.sendto(("<" + addr[0] + "> " + data).encode(), client)
 
-def broadcast_message(data, conn, sender):
-    for client in CLIENTS:
-        if client.ip_address != sender:
-            conn.send("<" + {client.username} + "> " + data.encode())
-
+def server(conn, addr):
+    # print(addr[0])
+    # broadcast_message("has joined!", conn, addr)
+    while True:
+        data = conn.recv(1024).decode()
+        if data:
+            broadcast_message(data, conn, addr)
 
 while True:
-    conn, addr = s.accept()
-    if not CLIENTS[addr]:
-        broadcast_message("has joined!", conn, addr)
-        CLIENTS[addr] = conn
-    data = conn.recv(1024)
-    broadcast_message(data, conn, addr)
+    s.listen(6)
+    conn,addr = s.accept()
+    CLIENTS[addr[0]] = conn
+    # print(addr)
+    _thread.start_new_thread(server, (conn, addr))
