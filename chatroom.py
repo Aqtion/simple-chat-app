@@ -10,9 +10,6 @@ class Chatroom:
 
         self.clients = []
 
-    def set_name(self, name: str):
-        self.name = name
-
     def add_client(self, client: client):
         self.clients.append(client)
 
