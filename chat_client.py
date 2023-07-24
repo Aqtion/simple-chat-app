@@ -26,7 +26,9 @@ s.connect((server.ip_address, server.port))
 
 
 def listen():
-    user_info_string = "USERINFO " + client.username + " " + client.uuid
+    user_info_string = (
+        "USERINFO " + client.username + " " + client.uuid + " " + client.password
+    )
     s.send(user_info_string.encode())
     while True:
         send_message = input()

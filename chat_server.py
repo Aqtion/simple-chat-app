@@ -1,12 +1,13 @@
 import socket
 import _thread
+import server
 
 # Global veriables
-PORT = 8001
-ADDRESS = ("10.29.60.96", PORT)
+serv = server.SERVER("10.29.60.96", 8001)
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind(ADDRESS)
+s.bind((serv.ip_address, serv.port))
 CLIENTS = {}
 
 
