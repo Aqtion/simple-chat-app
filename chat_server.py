@@ -2,6 +2,7 @@ import socket
 import _thread
 import server
 import client
+import message
 
 # Global veriables
 serv = server.Server("10.29.60.96", 8001)
@@ -16,7 +17,7 @@ def broadcast_message(data, addr):
     for client in CLIENTS:
         if client != addr[0]:
             connection = CLIENTS[client][0]
-            user = CLIENTS[client][1]
+            user = CLIENTS[addr[0]][1]
             mess = message.Message(user, data)
             connection.send(mess.create_message())
 
