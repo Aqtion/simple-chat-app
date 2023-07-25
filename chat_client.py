@@ -44,5 +44,5 @@ _thread.start_new_thread(listen, ())
 
 # Receives chatroom messages
 while True:
-    message = s.recv(2048)
-    print(message.decode())
+    mess = s.recv(2048)
+    print(mess.decode())
