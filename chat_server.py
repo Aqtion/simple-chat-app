@@ -2,10 +2,9 @@ import socket
 import _thread
 import server
 import client
-import message
 
 # Global veriables
-serv = server.SERVER("10.29.60.96", 8001)
+serv = server.Server("10.29.60.96", 8001)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

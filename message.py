@@ -6,6 +6,7 @@ class Color:
     DARKCYAN = "\033[36m"
     RED = "\033[91m"
     BOLD = "\033[1m"
+    END = "\033[0m"
 
 
 class Message:
@@ -27,9 +28,9 @@ class Message:
         self.msg = msg
 
     def create_message(self):
-        date = Color.DARKCYAN + self.sendTime
-        user = Color.RED + self.sender.username
-        data = Color.BOLD + self.msg
+        date = Color.DARKCYAN + self.sendTime + Color.END
+        user = Color.RED + self.sender.username + Color.END
+        data = Color.BOLD + self.msg + Color.END
         return (date + " | <" + user + "> " + data).encode()
 
     if __name__ == "__main__":
