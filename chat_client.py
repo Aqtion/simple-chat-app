@@ -28,18 +28,18 @@ s.connect((server.ip_address, server.port))
 
 def listen():
     user_info_string = (
-        "USERINFO " + client.username + " " + client.uuid + " " + client.password
+        "USERINFO " + client.username + " " + str(client.uuid) + " " + client.password
     )
     s.send(user_info_string.encode())
     while True:
         send_message = input()
-        message = message.Message(client, send_message)
-        print(message.create_message())
+        mess = message.Message(client, send_message)
+        print(mess.create_message())
         s.send(send_message.encode())
 
 
 _thread.start_new_thread(listen, ())
 
 while True:
-    message = s.recv(2048)
-    print(message.decode())
+    mess = s.recv(2048)
+    print(mess.decode())
