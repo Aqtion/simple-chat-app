@@ -2,6 +2,7 @@ import socket
 import _thread
 import server
 import client
+import message
 
 # Global veriables
 serv = server.Server("10.29.60.96", 8001)

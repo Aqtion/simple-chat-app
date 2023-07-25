@@ -17,10 +17,10 @@ server = Server(IP_ADDRESS, PORT)
 client.ip_address = IP_ADDRESS
 client.uuid = uuid.uuid1()
 
-username = input("Enter your username")
+username = input("Enter your username: ")
 client.username = username
 
-password = input("Enter your password")
+password = input("Enter your password: ")
 client.password = password
 
 s.connect((server.ip_address, server.port))
@@ -34,7 +34,7 @@ def listen():
     while True:
         send_message = input()
         mess = message.Message(client, send_message)
-        print(mess.create_message())
+        print(mess.create_message().decode())
         s.send(send_message.encode())
 
 
