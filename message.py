@@ -28,8 +28,8 @@ class Message:
         self.msg = msg
 
     def create_message(self):
-        date = Color.DARKCYAN + self.sendTime + Color.END
-        user = Color.RED + self.sender.username + Color.END
+        date = Color.DARKCYAN + self.sendTime + Color.BOLD + Color.END
+        user = Color.RED + self.sender.username + Color.BOLD + Color.END
         data = Color.BOLD + self.msg + Color.END
         print(user)
         return (date + " | <" + user + "> " + data).encode()
