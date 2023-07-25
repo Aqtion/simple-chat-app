@@ -30,9 +30,9 @@ def broadcast_message(data, addr):
     for client in CLIENTS:
         if client.ip_address != addr[0]:
             print(f"{client.username} just received a message.")
-            CLIENTS[client][0].send(("<" + CLIENTS[client][1].username + "> " + data).encode())
-            message = Message(CLIENTS[client][1], data)
-            chatroom.send(message)
+            mess = Message(CLIENTS[client][1], data)
+            CLIENTS[client][0].send(mess.create_message())
+            chatroom.send(mess)
 
 def server(conn, addr):
     """Listens to input from a chatroom user
@@ -48,7 +48,7 @@ def server(conn, addr):
     while True:
         data = conn.recv(1024).decode().strip()
         
-        if data.substr(0, 8) == "USERINFO":
+        if data[:8] == "USERINFO":
             user_info = data.split()
 
             client = Client(user_info[1], addr[0], user_info[2], user_info[3])

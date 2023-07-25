@@ -4,6 +4,8 @@ import _thread
 from subprocess import check_output
 from client import Client
 from server import Server
+from message import Message
+import _thread
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -33,6 +35,8 @@ def listen():
     """
     while True:
         send_message = input()
+        raw_message = Message(user, send_message)
+        print(raw_message.create_message().decode())
         s.send(send_message.encode())
 
 # Starts a thread to listen for user input
