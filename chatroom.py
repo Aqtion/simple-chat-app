@@ -3,16 +3,16 @@ from client import Client
 
 
 class Chatroom:
-    def __init__(self, name: str, uuid: str, messages: list):
+    def __init__(self, name: str, uuid: str):
         """A class for a chatroom
         @name: The name of the chatroom
-        @uuid: The unique id of the chatroom
+        @uuid: The unique ID of the chatroom
         @messages: A list of messages previously sent in the chatroom
         """
 
         self.name = name
         self.uuid = uuid
-        self.messages = messages
+        self.messages = []
 
         self.clients = []
 

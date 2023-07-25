@@ -1,23 +1,15 @@
 from datetime import datetime, date
-import client
+from client import Client
 
 class Message:
-    '''Represents a message and contains the metadata for each message
-    metadata: 
-        Date message was sent in the format yr/month/day
-        Time message was sent
-        User that sent message
-        Message that was sent'''
     
-    def __init__(self, sender: client, msg: str):
-        '''Constructor for Message class
-        Sets date and time to current date and time
-        Sets sender and message to inputted sender and message'''
+    def __init__(self, sender: Client, msg: str):
+        """A class for each message sent/received
+        @sender: The Client object sending the message
+        @msg: The raw data being transferred over the TCP connection
+        """
 
-        self.sendDate = date.today()  #date.today() returns in the format yr/mon/day
-        self.sendTime = datetime.now().strftime("%H:%M:%S")
+        self.sendDate = date.today()  # date.today() returns in the format yr/mon/day, sets the date of the message
+        self.sendTime = datetime.now().strftime("%H:%M:%S") # sets the time of the message
         self.sender = sender
         self.msg = msg
-    
-    if __name__ == "__main__":
-        pass

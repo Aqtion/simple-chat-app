@@ -1,34 +1,44 @@
 import socket
-import client
 import uuid
-import server
+import _thread
 from subprocess import check_output
+from client import Client
+from server import Server
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-user = client.Client()
-serv = server.Server()
+# Sets the default port to 8000, and the local IP address to 10.29.60.96
+PORT = 8000
+IP_ADDRESS = "10.29.60.96"
 
-ip_address = check_output(["hostname", "-I"]).strip().decode().split()[1]
+# Determines the local IP address
+# IP_ADDRESS = check_output(["hostname", "-I"]).strip().decode().split()[1]
 
-serv.port = 8000
-serv.ip_address = "10.39.40.234"
-
+# Inputs username and password, generates uuid
 username = input("Enter your username")
-user.username = username
-user.ip_address = ip_address
 password = input("Enter your password")
-user.password = password
-user.uuid = uuid.uuid1()
+uuid = uuid.uuid1()
 
-s.connect((serv.ip_address, serv.port))
+# Initializes Client and Server instances
+user = Client(username, IP_ADDRESS, password, uuid)
+server = Server(IP_ADDRESS, PORT)
 
+# Connects to the server
+s.connect((server.ip_address, server.port))
+
+def listen():
+    """Listens for user input to send to the chatroom
+    
+    :return: None
+    """
+    while True:
+        send_message = input()
+        s.send(send_message.encode())
+
+# Starts a thread to listen for user input
+_thread.start_new_thread(listen, ())
+
+# Receives chatroom messages
 while True:
-    conn, addr = s.accept()
-    if addr == serv.ip_address:
-        message = conn.recv(2048)
-        print(message)
-    else:
-        message = input()
-        conn.send(message.encode())
-        print("<" + {user.username} + "> " + message)
+    message = s.recv(2048)
+    print(message.decode())
