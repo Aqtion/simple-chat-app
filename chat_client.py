@@ -3,6 +3,7 @@ import uuid
 from subprocess import check_output
 from client import Client
 from server import Server
+import message
 import _thread
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,7 +33,8 @@ def listen():
     s.send(user_info_string.encode())
     while True:
         send_message = input()
-        print("<" + client.username + "> " + send_message)
+        message = message.Message(client, send_message)
+        print(message.create_message())
         s.send(send_message.encode())
 
 

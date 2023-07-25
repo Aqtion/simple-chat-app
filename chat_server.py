@@ -1,6 +1,8 @@
 import socket
 import _thread
 import server
+import client
+import message
 
 # Global veriables
 serv = server.SERVER("10.29.60.96", 8001)
@@ -14,10 +16,10 @@ CLIENTS = {}
 def broadcast_message(data, addr):
     for client in CLIENTS:
         if client != addr[0]:
-            print(client)
-            # conn.send(("<" + addr[0] + "> " + data).encode())
-            CLIENTS[client][0].send(("<" + CLIENTS[client][1] + "> " + data).encode())
-            # s.sendto(("<" + addr[0] + "> " + data).encode(), client)
+            connection = CLIENTS[client][0]
+            user = CLIENTS[client][1]
+            message = message.Message(user, data)
+            connection.send(message.create_message())
 
 
 def server(conn, addr):
@@ -27,8 +29,8 @@ def server(conn, addr):
         data = conn.recv(1024).decode()
         if data.substr(0, 8) == "USERINFO":
             user_info = data.split(" ")
-            CLIENTS[addr[0]].append(user_info[1])
-            CLIENTS[addr[0]].append(user_info[2])
+            user = client.Client(user_info[1], str(addr[0]), user_info[3], user_info[2])
+            CLIENTS[addr[0]].append(user)
         elif data:
             broadcast_message(data, addr)
 
