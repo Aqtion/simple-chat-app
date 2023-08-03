@@ -9,7 +9,7 @@ import _thread
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 PORT = 8001
-IP_ADDRESS = "10.29.60.96"
+IP_ADDRESS = "10.29.228.120"
 
 client = Client()
 server = Server(IP_ADDRESS, PORT)
